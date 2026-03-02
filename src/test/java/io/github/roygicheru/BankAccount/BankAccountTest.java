@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BankAccountTest {
+
     @Test
     void testValidDeposit() {
         BankAccount account = new BankAccount("a1b2c3", "Roy Gicheru", 1000.0);
@@ -26,8 +27,20 @@ public class BankAccountTest {
     }
 
     @Test
-    void testInvalidAccountNumber() {
-        BankAccount account = new BankAccount("wrong", "Roy Gicheru", 100.0);
-        assertNull(account.getAccountNumber(), "Account number should be null if it doesn't match the regex pattern");
+    void testNegativeDeposit() {
+        BankAccount account = new BankAccount("a1b2c3", "Roy Gicheru", 1000.0);
+        account.deposit(-200.0);
+        assertEquals(1000.0, account.getBalance(), "Balance should not change when depositing a negative amount");
+    }
+
+    @Test
+    void testInvalidAccountNumberThrowsException() {
+        // We assert that trying to create an account with an invalid number throws an IllegalArgumentException
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new BankAccount("wrong", "Roy Gicheru", 100.0);
+        });
+
+        // Optionally, verify the exception message matches what we expect
+        assertTrue(exception.getMessage().contains("exactly 6 alphanumeric characters"));
     }
 }

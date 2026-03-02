@@ -15,10 +15,11 @@ public class BankAccount {
     public double getBalance() { return balance; }
 
     public void setAccountNumber(String accountNumber) {
-        if (accountNumber != null && accountNumber.length() == 6 && accountNumber.matches("a1b2c3")) {
+        // Regex ^[a-zA-Z0-9]{6}$ ensures exactly 6 characters, only letters and numbers
+        if (accountNumber != null && accountNumber.matches("^[a-zA-Z0-9]{6}$")) {
             this.accountNumber = accountNumber;
         } else {
-            System.out.println("Account number must be exactly 6 alphanumeric characters!");
+            throw new IllegalArgumentException("Account number must be exactly 6 alphanumeric characters!");
         }
     }
 
