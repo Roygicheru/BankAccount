@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'Java25'
+    }
+
     triggers {
         // This listens to the GitHub Webhook coming through your ngrok tunnel
         githubPush()
